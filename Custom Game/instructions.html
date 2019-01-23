@@ -1,0 +1,41 @@
+<html>
+ <head>
+ 	<title> Reindeer School </title>
+ 	<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+ 	<script>
+ 	function start(){
+ 	  sjs.open("target", 800, 500);
+
+ 	  var background = new sjs.Image("Images/instructions3.png");
+ 	  background.setSize(800, 500);
+
+ 	  var instructiontxt = new sjs.Text("How to play:", 40, "black");
+ 	  instructiontxt.centerH().offset(0,20);
+
+ 	  var instruction2 = new sjs.Text("Collect points (Sugar cookies, eggnog, and candy canes) to move on.", 15,"black");
+ 	  instruction2.offset(200, 80);
+
+ 	  var instruction3 = new sjs.Text("But be careful not to run into other reindeer or presents!", 15, "black");
+ 	  instruction3.offset(200, 110);
+
+ 	  var instruction4 = new sjs.Text("Use the arrow keys to move.", 15, "black");
+ 	  instruction4.offset(200, 140);
+
+ 	  var goodTxt = new sjs.Text("Good luck reindeer!", 20, "black");
+ 	  goodTxt.centerH().offset(0,180);
+
+      var backBtn = new sjs.Button("Back", function(){
+      	window.location = "home.html";
+      });
+      backBtn.centerH().offset(0,220);
+
+
+ 	} //End function start
+ 	</script>
+ </head>
+  <body onload="start()">
+  	<h1> Reindeer School </h1>
+
+  	<div id = "target" style="margin:auto;background:white;"></div>
+  </body>
+ </html>

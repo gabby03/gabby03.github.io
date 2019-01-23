@@ -1,0 +1,35 @@
+<html>
+ <head>
+ 	<title> Reindeer School </title>
+ 	<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"> </script>
+ 	<script>
+ 	function start(){
+ 	  sjs.open("target", 800, 500);
+      //Background code
+ 	  var background = new sjs.Image("Images/congrats.jpg");
+ 	  background.setSize(800, 500);
+      //Onscreen text codes
+ 	  var next_text = new sjs.Text("Congrats Reindeer! You've got excellent skills! Santa wants you on his team this", 40, "black");
+ 	  next_text.centerH().offset(30,20);
+
+      var next_Text = new sjs.Text("year!", 40, "black");
+      next_Text.centerH().offset(0,110);
+      //Badge code
+       var badge = new sjs.Image("Images/santabadge-1.png.png");
+ 	  badge.setSize(250, 300);
+ 	  badge.centerH().offset(0,170);
+      //Button code
+ 	  var next_Btn = new sjs.Button("Home", function(){
+ 	  	window.location = "home.html";
+ 	  });
+ 	  next_Btn.centerH().offset(0, 450);
+
+ 	} //end function start
+ 	</script>
+ </head>
+  <body onload="start()">
+ 	<h1> Reindeer School </h1>
+
+ 	<div id= "target" style= "margin:auto;background:grey;"></div>
+  </body>
+ </html>

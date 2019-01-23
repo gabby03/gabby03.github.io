@@ -1,0 +1,215 @@
+<html>
+ <head>
+ 	<title> Reindeer School </title>
+ 	<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+ 	<script>
+ 	function start(){
+ 		sjs.open("target",800,500);
+
+ 		//background
+ 		var background = new sjs.Image("Images/background.jpg");
+ 		background.setSize(2000,500);
+
+ 		//Score text popup
+ 		var collectTxt = new sjs.Text("Collect 50 points", 40, "lightblue");
+ 		collectTxt.centerH().offset(0, 200);
+ 		setTimeout(function(){
+ 			collectTxt.destroy();
+ 		}, 2000);
+
+ 		//player properties
+ 		var player = new sjs.Image("Images/player1R.png");
+ 		player.type = "player";
+ 		player.setSize(150,150);
+ 		player.friction = .1;
+ 		player.accel = .3;
+ 		player.noBounds = true;
+ 		sjs.scrollable(player, background);
+
+ 		sjs.keyDown(RIGHT_KEY, function(){
+ 			player.setImage("Images/player1R.png");
+ 			player.pushRight();
+ 		});
+
+ 		sjs.keyDown(LEFT_KEY, function(){
+ 			player.setImage("Images/player1L.png");
+ 			player.pushLeft();
+ 		});
+
+ 		sjs.keyDown(UP_KEY, function(){
+ 			player.pushUp();
+ 		});
+
+ 		sjs.keyDown(DOWN_KEY, function(){
+ 			player.pushDown();
+ 		});
+ 		sjs.onHit("player", ["bottom_screen","top_screen"], function(x,y){
+ 			sjs.stoppedBy(x,y);
+ 		});
+        sjs.onHit("player", ["left_screen", "right_screen"],
+            function(x,y){
+            sjs.stoppedBy(x,y);
+        });
+
+ 	    //Score code
+ 	    var score = 0;
+ 	    var score_text = new sjs.Text("Score: 0", 20, "white");
+ 	    score_text.fixed = true;
+ 	    
+
+
+ 	    //Enemy properties
+ 	    setInterval(function(){
+ 	    var speed = Math.round(1 + Math.random()*8);
+ 	    var Enemy = new sjs.Image("Images/enemy1.png");
+ 	    Enemy.type = "Enemy";
+ 	    Enemy.setSize(150,150);
+ 	    Enemy.noBounds = true;
+ 	    Enemy.pushLeft(speed);
+ 	    Enemy.friction = 0;
+ 	    Enemy.moveTo(2000 , Math.random()*(Enemy.getClamp().y));
+ 	    },10000);
+ 	    sjs.left_screen.offset(-100);
+ 	    sjs.onHit("Enemy", "left_screen", function(x,y){
+ 	    	x.destroy();
+ 	    });
+ 	    sjs.onHit("player", "Enemy", function(x,y){
+ 	    	x.destroy();
+ 	    	window.location = "lose.html";
+ 	    	localStorage.setItem("score",score);
+ 	    });
+
+ 	    //Powerup properties
+ 		setInterval(function(){
+ 		var x = Math.floor(Math.random() *2083);
+ 		var y = Math.floor(Math.random() *450);
+ 		var speed = Math.round(1 + Math.random()*10);
+ 		var Powerup = new sjs.Image("Images/eggnog powerup.png");
+ 		Powerup.type = "Powerup";
+ 		Powerup.setSize(40,40);
+ 		Powerup.noBounds = true;
+ 		Powerup.pushLeft(speed);
+ 		Powerup.friction = 0;
+ 		Powerup.moveTo(x,y);
+ 	    },20000);
+        sjs.onHit("Powerup", "left_screen", function(x,y){
+        	x.destroy();
+        });
+        sjs.onHit("Powerup", "player", function(x,y){
+        	score = score + 5;
+ 	    	score_text.setText("Score: "+score);
+ 	    	x.destroy();
+        });
+
+ 	    //Obstacle properties
+ 	    setInterval(function(){
+ 	    var speed = Math.round(1 + Math.random()*7);
+ 	    if(Math.random() > 0.5){
+ 	    var obstacle = new sjs.Image("Images/obstacle1.png");
+ 	    obstacle.type = "obstacle";
+ 	    obstacle.setSize(30,30);
+ 	    obstacle.noBounds = true;
+ 	    obstacle.pushLeft(speed);
+ 	    obstacle.friction = 0;
+ 	    obstacle.moveTo(2000 , Math.random()*(obstacle.getClamp().y)); 
+ 	    } else {
+ 	    var obstacle = new sjs.Image("Images/obstacle2.png");
+ 	    obstacle.type = "obstacle";
+ 	    obstacle.setSize(30,30);
+ 	    obstacle.noBounds = true;
+ 	    obstacle.pushLeft(speed);
+ 	    obstacle.friction = 0;
+ 	    obstacle.moveTo(2000 , Math.random()*(obstacle.getClamp().y));
+ 	    }
+ 	    },20000); 
+ 	    sjs.onHit("obstacle", "left_screen", function(x,y){
+ 	    	x.destroy();
+ 	    });
+ 	    sjs.onHit("player", "obstacle", function(x,y){
+ 	    	x.destroy();
+ 	    	y.destroy();
+ 	    	window.location = "lose.html";
+ 	    	localStorage.setItem("score",score);
+        });
+
+ 	    //Snowflakes
+ 	    setInterval(function(){
+ 	    var speed = Math.round(1 + Math.random()*5);
+ 	    var x = Math.floor(Math.random() *2083);
+ 	    var y = Math.floor(Math.random() *800);
+ 	    if(Math.random() > 0.5){
+        var snowflake = new sjs.Image("Images/snowflake1.png");
+        snowflake.type = "snowflake"
+        snowflake.setSize(15,15);
+        snowflake.noBounds = true;
+        snowflake.pushDown(speed);
+        snowflake.friction = 0;
+        snowflake.moveTo(x,y);
+        } else {
+        var snowflake = new sjs.Image("Images/snowflake3.png");
+        snowflake.type = "snowflake";
+        snowflake.setSize(15,15);
+        snowflake.noBounds = true;
+        snowflake.pushDown(speed);
+        snowflake.friction = 0;
+        snowflake.moveTo(x,y);
+        }
+ 	    },1000);
+ 	    sjs.onHit("snowflake", "bottom_screen", function(x,y){
+ 	    	x.destroy();
+ 	    });
+ 	    
+ 	    //Point properties
+ 	    setInterval(function(){
+        var speed = Math.round(1 + Math.random()*8);
+        var x = Math.floor(Math.random() *2083);
+        var y = Math.floor(Math.random() *450);
+ 	    var point = new sjs.Image("Images/sugarcookie point.png");
+ 	    point.type = "point";
+ 	    point.setSize(20,20);
+ 	    point.noBounds = true;
+ 	    point.pushLeft(speed);
+ 	    point.friction = 0;
+ 	    point.moveTo(x,y);
+ 	    }, 10000);
+
+        setInterval(function(){
+        var speed = Math.round(1 + Math.random()*8);
+        var x = Math.floor(Math.random() *2083);
+        var y = Math.floor(Math.random() *450);
+ 	    var point2 = new sjs.Image("Images/candycane.png");
+ 	    point2.type = "point"
+ 	    point2.setSize(20,20);
+ 	    point2.noBounds = true;
+ 	    point2.pushLeft(speed);
+ 	    point2.friction = 0;
+ 	    point2.moveTo(x,y);
+ 	    }, 10000);
+
+ 	    sjs.onHit("point", "player", function(x,y){
+ 	    	score = score + 1;
+ 	    	score_text.setText("Score: "+score);
+ 	    	x.destroy();
+            if(score >= 50){
+        window.location = "nextLevel2.html";
+        }
+ 	    });
+ 	    sjs.onHit("point", "left_screen", function(x,y){
+            x.destroy();
+ 	    });
+
+
+
+
+
+
+
+ 	} //end start
+ 	</script>
+ </head>
+ <body onload ="start()">
+ 	<h1> Level 2 </h1>
+
+ 	<div id = "target" style="margin:auto;background:grey;"></div>
+ </body>
+</html>

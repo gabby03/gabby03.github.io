@@ -1,0 +1,32 @@
+<html>
+ <head>
+ 	<title> Reindeer School </title>
+ 	<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"> </script>
+ 	<script>
+ 	function start(){
+ 	  sjs.open("target", 800, 500);
+      //Background code
+ 	  var background = new sjs.Image("Images/nextLevel1.gif");
+ 	  background.setSize(800, 500);
+      //Onscreen text codes
+ 	  var next_text = new sjs.Text("Congrats Reindeer! You're really improving!", 40, "lightblue");
+ 	  next_text.centerH().offset(0,20);
+
+      var next_Text = new sjs.Text("That's why you're getting moved up!", 40, "lightblue");
+      next_Text.centerH().offset(0,60);
+      //Button code
+ 	  var next_Btn = new sjs.Button("Next Level", function(){
+ 	  	window.location = "reindeer2.html";
+ 	  });
+ 	  next_Btn.centerH().offset(0, 450);
+
+ 	} //end function start
+ 	</script>
+ </head>
+  <body onload="start()">
+ 	<h1> Reindeer School </h1>
+
+ 	<div id= "target" style= "margin:auto;background:grey;"></div>
+  </body>
+ </html>
+
